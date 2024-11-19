@@ -32,21 +32,36 @@
                 updateMessage("The video has started playing.");
             });
 
+            // Function to simulate a scroll action
+            const simulateScroll = () => {
+                // Scroll the page down by 100 pixels
+                window.scrollTo({
+                    top: 100, // Adjust the value as needed
+                    behavior: "smooth",
+                });
+
+                // Dispatch the scroll event to simulate user scrolling
+                const scrollEvent = new Event("scroll");
+                window.dispatchEvent(scrollEvent);
+            };
+
+            // Listen for a scroll event to play the video
+            window.addEventListener("scroll", () => {
+                updateMessage("Scroll detected. Attempting to play the video...");
+                video.play().then(() => {
+                    updateMessage("Video played successfully after scroll.");
+                }).catch((error) => {
+                    updateMessage("Video play failed after scroll: " + error.message);
+                });
+            });
+
             // Attempt to autoplay the video
             video.play().then(() => {
                 updateMessage("Autoplay started successfully.");
             }).catch((error) => {
-                updateMessage("Autoplay failed. Simulating user interaction...");
-
-                // Simulate a user interaction to allow autoplay
-                const playEvent = new Event("click");
-                video.dispatchEvent(playEvent);
-
-                video.play().then(() => {
-                    updateMessage("Autoplay succeeded after simulating interaction.");
-                }).catch((interactionError) => {
-                    updateMessage("Autoplay still failed.");
-                });
+                updateMessage("Autoplay failed. Simulating user scroll...");
+                // Simulate a scroll after autoplay fails
+                setTimeout(simulateScroll, 1000);
             });
         });
     </script>
