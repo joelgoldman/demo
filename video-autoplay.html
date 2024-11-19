@@ -32,15 +32,8 @@
                 updateMessage("The video has started playing.");
             });
 
-            // Function to simulate a scroll action
+            // Function to simulate a scroll event
             const simulateScroll = () => {
-                // Scroll the page down by 100 pixels
-                window.scrollTo({
-                    top: 100, // Adjust the value as needed
-                    behavior: "smooth",
-                });
-
-                // Dispatch the scroll event to simulate user scrolling
                 const scrollEvent = new Event("scroll");
                 window.dispatchEvent(scrollEvent);
             };
