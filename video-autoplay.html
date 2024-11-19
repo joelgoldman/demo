@@ -18,24 +18,34 @@
             const video = document.getElementById("myVideo");
             const message = document.getElementById("message");
 
+            // Utility function to update message text
+            const updateMessage = (text) => {
+                message.textContent = text;
+            };
+
+            // Log suspend and play events
+            video.addEventListener("suspend", () => {
+                updateMessage("The video has been suspended.");
+            });
+
+            video.addEventListener("play", () => {
+                updateMessage("The video has started playing.");
+            });
+
             // Attempt to autoplay the video
             video.play().then(() => {
-                message.textContent = "Autoplay started successfully.";
-                console.log("Autoplay started successfully.");
+                updateMessage("Autoplay started successfully.");
             }).catch((error) => {
-                console.warn("Autoplay failed:", error);
-                message.textContent = "Autoplay failed. Simulating user interaction...";
+                updateMessage("Autoplay failed. Simulating user interaction...");
 
                 // Simulate a user interaction to allow autoplay
                 const playEvent = new Event("click");
                 video.dispatchEvent(playEvent);
 
                 video.play().then(() => {
-                    message.textContent = "Autoplay succeeded after simulating interaction.";
-                    console.log("Autoplay succeeded after simulating interaction.");
+                    updateMessage("Autoplay succeeded after simulating interaction.");
                 }).catch((interactionError) => {
-                    message.textContent = "Autoplay still failed.";
-                    console.error("Autoplay still failed:", interactionError);
+                    updateMessage("Autoplay still failed.");
                 });
             });
         });
